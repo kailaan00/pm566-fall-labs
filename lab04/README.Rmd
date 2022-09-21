@@ -141,6 +141,31 @@ met_avg[!is.na(region) & !is.na(wind.sp)] %>%
 
 The southwest region shows a pattern of decrease while the other three regions are increasing.
 
+## Step 5. Use geom_bar to create barplots of the weather stations by elevation category coloured by region
+
+```{r}
+met_avg %>%
+filter(!(elev_cat %in% NA)) %>% 
+  ggplot() + 
+  geom_bar(mapping = aes(x = elev_cat, fill=region), position = "dodge") + scale_fill_brewer(palette = "Blues") +
+  labs(title = "Elevation of Weather Stations") + 
+  labs(x = expression("Elevation" * (degrees)), y = "Number of Weather Stations")
+```
+
+
+##Step 6. Use stat_summary to examine mean dew point and wind speed by region with standard deviation error bars
+
+```{r}
+met_avg[!is.na(dew.point)] %>%
+  ggplot(mapping = aes(x=region, y=dew.point)) + 
+    stat_summary(fun.data = mean_sdl, 
+  geom = "errorbar")
+```
+
+
+
+
+
 
 
 

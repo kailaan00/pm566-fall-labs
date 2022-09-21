@@ -158,13 +158,58 @@ filter(!(elev_cat %in% NA)) %>%
 ```{r}
 met_avg[!is.na(dew.point)] %>%
   ggplot(mapping = aes(x=region, y=dew.point)) + 
+    stat_summary(fun.data = mean_sdl,
+  geom = "errorbar")
+```
+
+Mean dew point is highest in SE region.  The SD for NE and SE regions are small and the SD for NW and SW are larger.
+
+
+```{r}
+met_avg[!is.na(wind.sp)] %>%
+  ggplot(mapping = aes(x=region, y=wind.sp)) + 
     stat_summary(fun.data = mean_sdl, 
   geom = "errorbar")
 ```
 
+The windspeed is highest in the SW region.
 
 
+## Step 7. Generate a map of weather stations and show trend in relative humidity of top 10.
 
+```{r}
+library(leaflet)
+# Generating a color palette
+rh.pal <- colorNumeric(c('darkgreen','goldenrod','brown'), domain=met_avg$rh)
+rh.pal
+```
+
+Use addMarkers to include the top 10 places in relative h (hint: this will be useful rank(-rh) <= 10)
+
+```{r}
+top10rh <- met_avg[ rank(-rh) <= 10]
+```
+
+```{r}
+#met_avg[ order(-rh)][1:10]
+```
+
+```{r}
+rhmap <- leaflet(met_avg) %>% 
+  # The looks of the Map
+  addProviderTiles('CartoDB.Positron') %>% 
+  # Some circles
+  addCircles(
+    lat = ~lat, lng=~lon,
+                                                  # HERE IS OUR PAL!
+    label = ~paste0(rh), color = ~ rh.pal(rh),
+    opacity = 1, fillOpacity = 1, radius = 500
+    ) %>%
+  # And a pretty legend
+  addLegend('bottomleft', pal=rh.pal, values=met_avg$rh,
+          title='Relativer Humid.', opacity=1)
+rhmap
+```
 
 
 

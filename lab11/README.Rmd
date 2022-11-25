@@ -9,6 +9,8 @@ editor_options:
 always_allow_html: true
 ---
 
+**HTML REPORT:** [**click here**](https://rawcdn.githack.com/kailaan00/pm566-fall-labs/db75135e86f4e242ac7709ceccbebaecb985665e/lab11/README.html) 
+
 ```{r setup, message=FALSE, echo=FALSE, warning=FALSE}
 library(data.table)
 library(tidyverse)

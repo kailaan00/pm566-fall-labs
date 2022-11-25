@@ -42,7 +42,7 @@ Read in the state population data with data.table:fread() from the repository: â
 
 Merge datasets
 
-```{r}
+```{r, echo=TRUE, message=FALSE}
 
 ## data extracted from New York Times state-level data from NYT Github repository
 # https://github.com/nytimes/covid-19-data
